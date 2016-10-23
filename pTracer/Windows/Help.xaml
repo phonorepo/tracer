@@ -1,0 +1,53 @@
+﻿<Window x:Class="pTracer.Windows.Help"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:pTracer.Windows"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterOwner"
+        Icon="../PT.png"
+        Title="Help" Height="480" Width="600" Background="#FF333333" Closed="Window_Closed">
+
+    <Window.Resources>
+        <SolidColorBrush x:Key="BrushGrid" Color="#444"/>
+        <SolidColorBrush x:Key="BrushTitle" Color="#FFAAA4A4"/>
+        <SolidColorBrush x:Key="BrushTitle2" Color="#FF99B4D1"/>
+
+        <SolidColorBrush x:Key="BrushTextOnDark" Color="#FFCBE164"/>
+    </Window.Resources>
+
+    <Grid Background="#FF333333" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <StackPanel Margin="4">
+            <TextBlock FontFamily="Square721 BT" FontSize="22" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#FFAAA4A4">Help</TextBlock>
+            <TextBlock FontFamily="Square721 BT" FontSize="22" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#FFAAA4A4"></TextBlock>
+            <TextBlock FontFamily="Square721 BT" FontSize="12" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{StaticResource BrushTextOnDark}" TextDecorations="Underline">HowTo</TextBlock>
+
+            <TextBlock FontFamily="Square721 BT" FontSize="12" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#FFAAA4A4"></TextBlock>
+            <TextBlock FontFamily="Square721 BT" FontSize="12" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{StaticResource BrushTitle2}">
+               1. select target file</TextBlock>
+            <TextBlock FontFamily="Square721 BT" FontSize="12" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#FFAAA4A4" TextWrapping="WrapWithOverflow">(make sure that all referenced files are in the same folder)</TextBlock>
+
+            <TextBlock FontFamily="Square721 BT" FontSize="12" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#FFAAA4A4"></TextBlock>
+            <TextBlock FontFamily="Square721 BT" FontSize="12" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{StaticResource BrushTitle2}">2. click "Analyze"-Button</TextBlock>
+            <TextBlock FontFamily="Square721 BT" FontSize="12" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#FFAAA4A4" TextWrapping="WrapWithOverflow">this will fill the list with all found sections of the target assembly</TextBlock>
+
+            <TextBlock FontFamily="Square721 BT" FontSize="12" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#FFAAA4A4"></TextBlock>
+            <TextBlock FontFamily="Square721 BT" FontSize="12" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{StaticResource BrushTitle2}">3. select methods</TextBlock>
+            <TextBlock FontFamily="Square721 BT" FontSize="12" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#FFAAA4A4" TextWrapping="WrapWithOverflow">either manually select the methods from the list (marked with: Me) where to inject the trace code or click the "Select All"-Button</TextBlock>
+
+            <TextBlock FontFamily="Square721 BT" FontSize="12" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#FFAAA4A4"></TextBlock>
+            <TextBlock FontFamily="Square721 BT" FontSize="12" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{StaticResource BrushTitle2}">4. click "Inject"-Button</TextBlock>
+            <TextBlock FontFamily="Square721 BT" FontSize="12" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#FFAAA4A4" TextWrapping="WrapWithOverflow">this will read the target file and writes the tracing code to every selected method into a new file (date-time appended to filename). Output folder is the appfolder of this tracer program.</TextBlock>
+
+            <TextBlock FontFamily="Square721 BT" FontSize="12" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#FFAAA4A4"></TextBlock>
+            <TextBlock FontFamily="Square721 BT" FontSize="12" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{StaticResource BrushTitle2}">5. Run and trace</TextBlock>
+            <TextBlock FontFamily="Square721 BT" FontSize="12" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#FFAAA4A4" TextWrapping="WrapWithOverflow">If the target file has no additional references, clicking the "Run + trace"-Button will directly start the new file and start tracing filtered by PID automatically. Or you have to copy the new file and Logging.dll to the original application folder and manually start or select the program.</TextBlock>
+
+            <TextBlock FontFamily="Square721 BT" FontSize="12" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#FFAAA4A4"></TextBlock>
+            <TextBlock FontFamily="Square721 BT" FontSize="12" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{StaticResource BrushTitle2}">6. (Optional) FUSION logging</TextBlock>
+            <TextBlock FontFamily="Square721 BT" FontSize="12" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#FFAAA4A4" TextWrapping="WrapWithOverflow">Optionally you can enable/disable FUSION logging with the corresponding button. Be aware this will write to the registry and set the log folder to a subfolder "Log" in the appfolder of this tracer program.</TextBlock>
+
+        </StackPanel>
+    </Grid>
+</Window>

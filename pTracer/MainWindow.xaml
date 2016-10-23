@@ -1,0 +1,530 @@
+﻿<Window x:Class="pTracer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:pTracer"
+        mc:Ignorable="d"
+        TextOptions.TextFormattingMode="Display"
+        TextOptions.TextRenderingMode="ClearType"
+        RenderOptions.ClearTypeHint="Enabled"
+        UseLayoutRounding="true"
+        Icon="PT.png"
+        Title="phono's Tracer" Height="800" Width="900" Closed="Window_Closed" Closing="Window_Closing">
+
+    <Window.Resources>
+        <SolidColorBrush x:Key="BrushMainGrid" Color="#444"/>
+
+        <SolidColorBrush x:Key="BrushTextOnDark" Color="#FFCBE164"/>
+        
+        <SolidColorBrush x:Key="BrushAssembly" Color="Orange"/>
+        <SolidColorBrush x:Key="BrushModule" Color="DeepPink"/>
+        <SolidColorBrush x:Key="BrushType" Color="GreenYellow"/>
+        <SolidColorBrush x:Key="BrushMethod" Color="DarkOrange"/>
+        <SolidColorBrush x:Key="BrushParameter" Color="LightSeaGreen"/>
+        <SolidColorBrush x:Key="BrushVariable" Color="Yellow"/>
+        <SolidColorBrush x:Key="BrushPID" Color="DarkSeaGreen"/>
+
+        <SolidColorBrush x:Key="BrushAnalyze" Color="RoyalBlue"/>
+        <SolidColorBrush x:Key="BrushInject" Color="Goldenrod"/>
+        <SolidColorBrush x:Key="BrushRun" Color="Tomato"/>
+        <SolidColorBrush x:Key="BrushTrace" Color="DarkCyan"/>
+        <SolidColorBrush x:Key="BrushFUSION" Color="BlueViolet"/>
+
+        <SolidColorBrush x:Key="BrushToggleButtonChecked" Color="LightSeaGreen"/>
+        
+        <SolidColorBrush x:Key="BrushGreen" Color="Green"/>
+        <SolidColorBrush x:Key="BrushRed" Color="Red"/>
+        <SolidColorBrush x:Key="BrushBlue" Color="Blue"/>
+        <SolidColorBrush x:Key="BrushAliceBlue" Color="AliceBlue"/>
+        <SolidColorBrush x:Key="BrushCornflowerBlue" Color="CornflowerBlue"/>
+
+
+        <SolidColorBrush x:Key="BrushDarkGray" Color="DarkGray"/>
+        <SolidColorBrush x:Key="BrushGray" Color="Gray"/>
+        <SolidColorBrush x:Key="BrushLightGray" Color="LightGray"/>
+
+        <!-- 1 -->
+        <DrawingImage x:Key="1Image">
+            <DrawingImage.Drawing>
+                <DrawingGroup>
+                    <GeometryDrawing>
+                        <GeometryDrawing.Pen>
+                            <Pen Thickness="50" DashCap="Flat" StartLineCap="Flat" EndLineCap="Flat" LineJoin="Miter" MiterLimit="10" Brush="{StaticResource BrushTextOnDark}" />
+                        </GeometryDrawing.Pen>
+                        <GeometryDrawing.Geometry>
+                            <EllipseGeometry Center="400,400" RadiusX="362" RadiusY="363" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing Brush="{StaticResource BrushTextOnDark}">
+                        <GeometryDrawing.Geometry>
+                            <!--<TextGeometry TopLeft="271,164" BottomRight="271,164" Text="1" FontFamily="Arial" FontStyle="Normal" FontWeight="Bold" TextSize="400" Alignment="Left" Trimming="CharacterEllipsis" />-->
+                            <GeometryGroup>
+                                <GeometryGroup>
+                                    <PathGeometry Figures="M383.890625,245.1533203125L428.421875,245.1533203125 428.421875,532.6533203125 373.5390625,532.6533203125 373.5390625,325.8173828125C353.486968994141,344.5673828125,329.854156494141,358.4345703125,302.640625,367.4189453125L302.640625,317.6142578125C316.963531494141,312.9267578125 332.5234375,304.0400390625 349.3203125,290.9541015625 366.1171875,277.8681640625 377.640625,262.601226806641 383.890625,245.1533203125z " />
+                                </GeometryGroup>
+                            </GeometryGroup>
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                </DrawingGroup>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+
+        <!-- 2 -->
+
+        <DrawingImage x:Key="2Image">
+            <DrawingImage.Drawing>
+                <DrawingGroup>
+                    <GeometryDrawing>
+                        <GeometryDrawing.Pen>
+                            <Pen Thickness="50" DashCap="Flat" StartLineCap="Flat" EndLineCap="Flat" LineJoin="Miter" MiterLimit="10" Brush="#FF000000" />
+                        </GeometryDrawing.Pen>
+                        <GeometryDrawing.Geometry>
+                            <EllipseGeometry Center="400,400" RadiusX="362" RadiusY="363" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing Brush="#FF000000">
+                        <GeometryDrawing.Geometry>
+                            <!--<TextGeometry TopLeft="289,154" BottomRight="289,154" Text="2" FontFamily="Arial" FontStyle="Normal" FontWeight="Bold" TextSize="400" Alignment="Left" Trimming="CharacterEllipsis" />-->
+                            <GeometryGroup>
+                                <GeometryGroup>
+                                    <PathGeometry Figures="M400.5234375,235.1533203125C428.778625488281,235.1533203125 450.979187011719,242.7705078125 467.125,258.0048828125 483.270812988281,273.2392578125 491.34375,292.1845703125 491.34375,314.8408203125 491.34375,327.7314453125 489.032531738281,340.003601074219 484.41015625,351.6572265625 479.787780761719,363.310852050781 472.463562011719,375.517883300781 462.4375,388.2783203125 455.796875,396.741851806641 443.817687988281,408.916351318359 426.5,424.8017578125 409.182281494141,440.687164306641 398.212249755859,451.234039306641 393.58984375,456.4423828125 388.967437744141,461.650726318359 385.223968505859,466.728851318359 382.359375,471.6767578125L491.34375,471.6767578125 491.34375,522.6533203125 298.9609375,522.6533203125C301.044281005859,503.382476806641 307.294281005859,485.120758056641 317.7109375,467.8681640625 328.127593994141,450.615570068359 348.700531005859,427.7314453125 379.4296875,399.2158203125 404.169281005859,376.1689453125 419.338562011719,360.5439453125 424.9375,352.3408203125 432.489562988281,341.0126953125 436.265625,329.814758300781 436.265625,318.7470703125 436.265625,306.507507324219 432.977844238281,297.099914550781 426.40234375,290.5244140625 419.826843261719,283.948913574219 410.744781494141,280.6611328125 399.15625,280.6611328125 387.697906494141,280.6611328125 378.583343505859,284.111633300781 371.8125,291.0126953125 365.041656494141,297.913757324219 361.135406494141,309.3720703125 360.09375,325.3876953125L305.40625,319.9189453125C308.661468505859,289.710632324219 318.8828125,268.030944824219 336.0703125,254.8798828125 353.2578125,241.728851318359 374.7421875,235.1533203125 400.5234375,235.1533203125z " />
+                                </GeometryGroup>
+                            </GeometryGroup>
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                </DrawingGroup>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+
+        <!-- 3 -->
+
+        <DrawingImage x:Key="3Image">
+            <DrawingImage.Drawing>
+                <DrawingGroup>
+                    <GeometryDrawing>
+                        <GeometryDrawing.Pen>
+                            <Pen Thickness="50" DashCap="Flat" StartLineCap="Flat" EndLineCap="Flat" LineJoin="Miter" MiterLimit="10" Brush="#FF000000" />
+                        </GeometryDrawing.Pen>
+                        <GeometryDrawing.Geometry>
+                            <EllipseGeometry Center="400,400" RadiusX="362" RadiusY="363" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing Brush="#FF000000">
+                        <GeometryDrawing.Geometry>
+                            <!--<TextGeometry TopLeft="289,154" BottomRight="289,154" Text="3" FontFamily="Arial" FontStyle="Normal" FontWeight="Bold" TextSize="400" Alignment="Left" Trimming="CharacterEllipsis" />-->
+                            <GeometryGroup>
+                                <GeometryGroup>
+                                    <PathGeometry Figures="M396.421875,235.1533203125C423.375,235.1533203125 444.989562988281,243.7470703125 461.265625,260.9345703125 474.677062988281,274.9970703125 481.3828125,290.882507324219 481.3828125,308.5908203125 481.3828125,333.721008300781 467.645812988281,353.773132324219 440.171875,368.7470703125 456.578125,372.2626953125 469.696594238281,380.140319824219 479.52734375,392.3798828125 489.358093261719,404.619476318359 494.2734375,419.398101806641 494.2734375,436.7158203125 494.2734375,461.846038818359 485.09375,483.265289306641 466.734375,500.9736328125 448.375,518.681945800781 425.5234375,527.5361328125 398.1796875,527.5361328125 372.268218994141,527.5361328125 350.783843994141,520.081726074219 333.7265625,505.1728515625 316.669281005859,490.264007568359 306.7734375,470.765289306641 304.0390625,446.6767578125L357.1640625,440.2314453125C358.856781005859,453.773101806641 363.4140625,464.124664306641 370.8359375,471.2861328125 378.2578125,478.447601318359 387.2421875,482.0283203125 397.7890625,482.0283203125 409.1171875,482.0283203125 418.654968261719,477.7314453125 426.40234375,469.1376953125 434.149719238281,460.5439453125 438.0234375,448.955413818359 438.0234375,434.3720703125 438.0234375,420.569976806641 434.3125,409.632476806641 426.890625,401.5595703125 419.46875,393.486633300781 410.419281005859,389.4501953125 399.7421875,389.4501953125 392.7109375,389.4501953125 384.3125,390.8173828125 374.546875,393.5517578125L380.6015625,348.8251953125C395.4453125,349.2158203125 406.7734375,345.9931640625 414.5859375,339.1572265625 422.3984375,332.3212890625 426.3046875,323.2392578125 426.3046875,311.9111328125 426.3046875,302.275695800781 423.440124511719,294.593444824219 417.7109375,288.8642578125 411.981781005859,283.135070800781 404.364593505859,280.2705078125 394.859375,280.2705078125 385.484375,280.2705078125 377.4765625,283.525695800781 370.8359375,290.0361328125 364.1953125,296.546569824219 360.158843994141,306.0517578125 358.7265625,318.5517578125L308.140625,309.9580078125C311.65625,292.640319824219 316.962249755859,278.8056640625 324.05859375,268.4541015625 331.154937744141,258.1025390625 341.05078125,249.964508056641 353.74609375,244.0400390625 366.44140625,238.115570068359 380.666656494141,235.1533203125 396.421875,235.1533203125z " />
+                                </GeometryGroup>
+                            </GeometryGroup>
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                </DrawingGroup>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+
+        <!-- Copy -->
+        <DrawingImage x:Key="CopyImage">
+            <DrawingImage.Drawing>
+                <DrawingGroup>
+                    <GeometryDrawing>
+                        <GeometryDrawing.Pen>
+                            <Pen Thickness="50" DashCap="Flat" StartLineCap="Flat" EndLineCap="Flat" LineJoin="Miter" MiterLimit="10" Brush="#FF000000" />
+                        </GeometryDrawing.Pen>
+                        <GeometryDrawing.Geometry>
+                            <EllipseGeometry Center="400,400" RadiusX="362" RadiusY="363" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing Brush="#FF000000">
+                        <GeometryDrawing.Geometry>
+                            <!--<TextGeometry TopLeft="284,79" BottomRight="284,79" Text="=" FontFamily="Arial" FontStyle="Normal" FontWeight="Bold" TextSize="400" Alignment="Left" Trimming="CharacterEllipsis" />-->
+                            <GeometryGroup>
+                                <GeometryGroup>
+                                    <PathGeometry Figures="M300.6015625,324.4111328125L500.796875,324.4111328125 500.796875,374.9970703125 300.6015625,374.9970703125 300.6015625,324.4111328125z M300.6015625,237.8876953125L500.796875,237.8876953125 500.796875,288.2783203125 300.6015625,288.2783203125 300.6015625,237.8876953125z " />
+                                </GeometryGroup>
+                            </GeometryGroup>
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing Brush="#FF000000">
+                        <GeometryDrawing.Geometry>
+                            <!--<TextGeometry TopLeft="285,252" BottomRight="285,252" Text="=" FontFamily="Arial" FontStyle="Normal" FontWeight="Bold" TextSize="400" Alignment="Left" Trimming="CharacterEllipsis" />-->
+                            <GeometryGroup>
+                                <GeometryGroup>
+                                    <PathGeometry Figures="M301.6015625,497.4111328125L501.796875,497.4111328125 501.796875,547.9970703125 301.6015625,547.9970703125 301.6015625,497.4111328125z M301.6015625,410.8876953125L501.796875,410.8876953125 501.796875,461.2783203125 301.6015625,461.2783203125 301.6015625,410.8876953125z " />
+                                </GeometryGroup>
+                            </GeometryGroup>
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                </DrawingGroup>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+
+        <!-- Mo -->
+        <DrawingImage x:Key="MoImage">
+            <DrawingImage.Drawing>
+                <DrawingGroup>
+                    <GeometryDrawing>
+                        <GeometryDrawing.Pen>
+                            <Pen Thickness="50" DashCap="Flat" StartLineCap="Flat" EndLineCap="Flat" LineJoin="Miter" MiterLimit="10" Brush="#FF000000" />
+                        </GeometryDrawing.Pen>
+                        <GeometryDrawing.Geometry>
+                            <EllipseGeometry Center="400,400" RadiusX="362" RadiusY="363" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing Brush="#FF000000">
+                        <GeometryDrawing.Geometry>
+                            <!--<TextGeometry TopLeft="127,155" BottomRight="127,155" Text="Mo" FontFamily="Arial" FontStyle="Normal" FontWeight="Bold" TextSize="400" Alignment="Left" Trimming="CharacterEllipsis" />-->
+                            <GeometryGroup>
+                                <GeometryGroup>
+                                    <PathGeometry Figures="M155.3203125,237.3251953125L241.84375,237.3251953125 293.796875,432.6376953125 345.1640625,237.3251953125 431.8828125,237.3251953125 431.8828125,523.6533203125 378.171875,523.6533203125 378.171875,298.2626953125 321.3359375,523.6533203125 265.671875,523.6533203125 209.03125,298.2626953125 209.03125,523.6533203125 155.3203125,523.6533203125 155.3203125,237.3251953125z " />
+                                    <PathGeometry Figures="M583.250244140625,356.2705078125C568.927307128906,356.2705078125 556.883056640625,361.7392578125 547.117431640625,372.6767578125 537.351806640625,383.6142578125 532.468994140625,399.369476318359 532.468994140625,419.9423828125 532.468994140625,440.515289306641 537.351806640625,456.2705078125 547.117431640625,467.2080078125 556.883056640625,478.1455078125 568.927307128906,483.6142578125 583.250244140625,483.6142578125 597.573120117188,483.6142578125 609.584838867188,478.1455078125 619.285400390625,467.2080078125 628.985900878906,456.2705078125 633.836181640625,440.385101318359 633.836181640625,419.5517578125 633.836181640625,399.2392578125 628.985900878906,383.6142578125 619.285400390625,372.6767578125 609.584838867188,361.7392578125 597.573120117188,356.2705078125 583.250244140625,356.2705078125z M583.054931640625,311.5439453125C614.435119628906,311.5439453125 640.151245117188,321.732727050781 660.203369140625,342.1103515625 680.255432128906,362.487976074219 690.281494140625,388.236633300781 690.281494140625,419.3564453125 690.281494140625,450.736663818359 680.157775878906,476.745758056641 659.910400390625,497.3837890625 639.662963867188,518.021789550781 614.174682617188,528.3408203125 583.445556640625,528.3408203125 564.435119628906,528.3408203125 546.303588867188,524.0439453125 529.051025390625,515.4501953125 511.798400878906,506.8564453125 498.679901123047,494.2587890625 489.695526123047,477.6572265625 480.711151123047,461.0556640625 476.218963623047,440.8408203125 476.218963623047,417.0126953125 476.218963623047,398.783538818359 480.711151123047,381.140319824219 489.695526123047,364.0830078125 498.679901123047,347.025695800781 511.407775878906,334.0048828125 527.879150390625,325.0205078125 544.350463867188,316.0361328125 562.742431640625,311.5439453125 583.054931640625,311.5439453125z " />
+                                </GeometryGroup>
+                            </GeometryGroup>
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                </DrawingGroup>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+
+        <!-- Me -->
+        <DrawingImage x:Key="MeImage">
+            <DrawingImage.Drawing>
+                <DrawingGroup>
+                    <GeometryDrawing>
+                        <GeometryDrawing.Pen>
+                            <Pen Thickness="50" DashCap="Flat" StartLineCap="Flat" EndLineCap="Flat" LineJoin="Miter" MiterLimit="10" Brush="#FF000000" />
+                        </GeometryDrawing.Pen>
+                        <GeometryDrawing.Geometry>
+                            <EllipseGeometry Center="400,400" RadiusX="362" RadiusY="363" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing Brush="#FF000000">
+                        <GeometryDrawing.Geometry>
+                            <!--<TextGeometry TopLeft="127,155" BottomRight="127,155" Text="Me" FontFamily="Arial" FontStyle="Normal" FontWeight="Bold" TextSize="400" Alignment="Left" Trimming="CharacterEllipsis" />-->
+                            <GeometryGroup>
+                                <GeometryGroup>
+                                    <PathGeometry Figures="M155.3203125,237.3251953125L241.84375,237.3251953125 293.796875,432.6376953125 345.1640625,237.3251953125 431.8828125,237.3251953125 431.8828125,523.6533203125 378.171875,523.6533203125 378.171875,298.2626953125 321.3359375,523.6533203125 265.671875,523.6533203125 209.03125,298.2626953125 209.03125,523.6533203125 155.3203125,523.6533203125 155.3203125,237.3251953125z " />
+                                    <PathGeometry Figures="M571.336181640625,353.5361328125C559.356994628906,353.5361328125 549.461181640625,357.898132324219 541.648681640625,366.6220703125 533.836181640625,375.346008300781 529.994995117188,387.195007324219 530.125244140625,402.1689453125L612.156494140625,402.1689453125C611.765869140625,386.283508300781 607.664306640625,374.206726074219 599.851806640625,365.9384765625 592.039306640625,357.670227050781 582.534057617188,353.5361328125 571.336181640625,353.5361328125z M568.015869140625,311.5439453125C598.875244140625,311.5439453125 623.224182128906,321.732727050781 641.062744140625,342.1103515625 658.901245117188,362.487976074219 667.429931640625,393.705383300781 666.648681640625,435.7626953125L529.148681640625,435.7626953125C529.539306640625,452.038726806641 533.966369628906,464.701507568359 542.429931640625,473.7509765625 550.893432617188,482.800445556641 561.440307617188,487.3251953125 574.070556640625,487.3251953125 582.664306640625,487.3251953125 589.890869140625,484.9814453125 595.750244140625,480.2939453125 601.609619140625,475.6064453125 606.036682128906,468.054351806641 609.031494140625,457.6376953125L663.718994140625,466.8173828125C656.687744140625,486.869476318359 645.587463378906,502.136383056641 630.418212890625,512.6181640625 615.248901367188,523.099914550781 596.271057128906,528.3408203125 573.484619140625,528.3408203125 537.416870117188,528.3408203125 510.724182128906,516.556945800781 493.406463623047,492.9892578125 479.734588623047,474.109039306641 472.898651123047,450.280914306641 472.898651123047,421.5048828125 472.898651123047,387.1298828125 481.883026123047,360.209289550781 499.851776123047,340.7431640625 517.820556640625,321.277038574219 540.541870117188,311.5439453125 568.015869140625,311.5439453125z " />
+                                </GeometryGroup>
+                            </GeometryGroup>
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                </DrawingGroup>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+
+        <!-- Ty -->
+        <DrawingImage x:Key="TyImage">
+            <DrawingImage.Drawing>
+                <DrawingGroup>
+                    <GeometryDrawing>
+                        <GeometryDrawing.Pen>
+                            <Pen Thickness="50" DashCap="Flat" StartLineCap="Flat" EndLineCap="Flat" LineJoin="Miter" MiterLimit="10" Brush="#FF000000" />
+                        </GeometryDrawing.Pen>
+                        <GeometryDrawing.Geometry>
+                            <EllipseGeometry Center="400,400" RadiusX="362" RadiusY="363" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing Brush="#FF000000">
+                        <GeometryDrawing.Geometry>
+                            <!--<TextGeometry TopLeft="182,151" BottomRight="182,151" Text="Ty" FontFamily="Arial" FontStyle="Normal" FontWeight="Bold" TextSize="400" Alignment="Left" Trimming="CharacterEllipsis" />-->
+                            <GeometryGroup>
+                                <GeometryGroup>
+                                    <PathGeometry Figures="M190.59375,233.3251953125L418.1328125,233.3251953125 418.1328125,281.7626953125 333.3671875,281.7626953125 333.3671875,519.6533203125 275.5546875,519.6533203125 275.5546875,281.7626953125 190.59375,281.7626953125 190.59375,233.3251953125z " />
+                                    <PathGeometry Figures="M399.384368896484,312.2314453125L457.782806396484,312.2314453125 507.392181396484,459.4970703125 555.829711914063,312.2314453125 612.665649414063,312.2314453125 539.423461914063,511.8408203125 526.337524414063,547.9736328125C521.519775390625,560.0830078125 516.929931640625,569.327819824219 512.567993164063,575.7080078125 508.205993652344,582.088195800781 503.192962646484,587.263977050781 497.528900146484,591.2353515625 491.864837646484,595.206726074219 484.898681640625,598.299133300781 476.630462646484,600.5126953125 468.362243652344,602.726257324219 459.019775390625,603.8330078125 448.603118896484,603.8330078125 438.056243896484,603.8330078125 427.704681396484,602.726257324219 417.548431396484,600.5126953125L412.665618896484,557.5439453125C421.259368896484,559.236633300781 429.006774902344,560.0830078125 435.907806396484,560.0830078125 448.668212890625,560.0830078125 458.108337402344,556.339538574219 464.228118896484,548.8525390625 470.347900390625,541.365539550781 475.035400390625,531.827819824219 478.290618896484,520.2392578125L399.384368896484,312.2314453125z " />
+                                </GeometryGroup>
+                            </GeometryGroup>
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                </DrawingGroup>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+
+        <!-- Pa -->
+        <DrawingImage x:Key="PaImage">
+            <DrawingImage.Drawing>
+                <DrawingGroup>
+                    <GeometryDrawing>
+                        <GeometryDrawing.Pen>
+                            <Pen Thickness="50" DashCap="Flat" StartLineCap="Flat" EndLineCap="Flat" LineJoin="Miter" MiterLimit="10" Brush="#FF000000" />
+                        </GeometryDrawing.Pen>
+                        <GeometryDrawing.Geometry>
+                            <EllipseGeometry Center="400,400" RadiusX="362" RadiusY="363" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing Brush="#FF000000">
+                        <GeometryDrawing.Geometry>
+                            <!--<TextGeometry TopLeft="182,151" BottomRight="182,151" Text="Pa" FontFamily="Arial" FontStyle="Normal" FontWeight="Bold" TextSize="400" Alignment="Left" Trimming="CharacterEllipsis" />-->
+                            <GeometryGroup>
+                                <GeometryGroup>
+                                    <PathGeometry Figures="M268.9140625,281.7626953125L268.9140625,363.0126953125 300.5546875,363.0126953125C323.341125488281,363.0126953125 338.575500488281,361.515319824219 346.2578125,358.5205078125 353.940124511719,355.525695800781 359.962219238281,350.838195800781 364.32421875,344.4580078125 368.686218261719,338.077819824219 370.8671875,330.655944824219 370.8671875,322.1923828125 370.8671875,311.775695800781 367.807312011719,303.181945800781 361.6875,296.4111328125 355.567687988281,289.640319824219 347.8203125,285.408508300781 338.4453125,283.7158203125 331.544250488281,282.413757324219 317.677062988281,281.7626953125 296.84375,281.7626953125L268.9140625,281.7626953125z M211.1015625,233.3251953125L303.875,233.3251953125C339.03125,233.3251953125 361.947937011719,234.757476806641 372.625,237.6220703125 389.03125,241.9189453125 402.768249511719,251.261383056641 413.8359375,265.6494140625 424.903625488281,280.037414550781 430.4375,298.624694824219 430.4375,321.4111328125 430.4375,338.9892578125 427.247375488281,353.767883300781 420.8671875,365.7470703125 414.486999511719,377.726257324219 406.381530761719,387.1337890625 396.55078125,393.9697265625 386.720031738281,400.8056640625 376.7265625,405.330413818359 366.5703125,407.5439453125 352.768249511719,410.2783203125 332.78125,411.6455078125 306.609375,411.6455078125L268.9140625,411.6455078125 268.9140625,519.6533203125 211.1015625,519.6533203125 211.1015625,233.3251953125z " />
+                                    <PathGeometry Figures="M591.960693359375,420.0439453125C584.929443359375,422.3876953125 573.796630859375,425.187164306641 558.562255859375,428.4423828125 543.327880859375,431.697601318359 533.366943359375,434.8876953125 528.679443359375,438.0126953125 521.518005371094,443.0908203125 517.937255859375,449.5361328125 517.937255859375,457.3486328125 517.937255859375,465.030914306641 520.801879882813,471.671539306641 526.531005859375,477.2705078125 532.260192871094,482.869476318359 539.551879882813,485.6689453125 548.406005859375,485.6689453125 558.301879882813,485.6689453125 567.741943359375,482.413726806641 576.726318359375,475.9033203125 583.366943359375,470.955413818359 587.728942871094,464.900726318359 589.812255859375,457.7392578125 591.244567871094,453.0517578125 591.960693359375,444.132476806641 591.960693359375,430.9814453125L591.960693359375,420.0439453125z M558.562255859375,307.5439453125C583.041442871094,307.5439453125 601.270629882813,310.441101074219 613.249755859375,316.2353515625 625.228942871094,322.029602050781 633.659912109375,329.386413574219 638.542724609375,338.3056640625 643.425537109375,347.224914550781 645.866943359375,363.5986328125 645.866943359375,387.4267578125L645.281005859375,451.4892578125C645.281005859375,469.718414306641 646.159912109375,483.162445068359 647.917724609375,491.8212890625 649.675537109375,500.480133056641 652.963317871094,509.757476806641 657.781005859375,519.6533203125L603.484130859375,519.6533203125C602.051879882813,516.007507324219 600.294067382813,510.603851318359 598.210693359375,503.4423828125 597.299255371094,500.187164306641 596.648193359375,498.038726806641 596.257568359375,496.9970703125 586.882568359375,506.111663818359 576.856567382813,512.947570800781 566.179443359375,517.5048828125 555.502380371094,522.062194824219 544.109130859375,524.3408203125 531.999755859375,524.3408203125 510.645629882813,524.3408203125 493.816192626953,518.546569824219 481.511505126953,506.9580078125 469.206817626953,495.369476318359 463.054473876953,480.721038818359 463.054473876953,463.0126953125 463.054473876953,451.2939453125 465.853942871094,440.8447265625 471.452911376953,431.6650390625 477.051879882813,422.4853515625 484.896911621094,415.4541015625 494.988067626953,410.5712890625 505.079223632813,405.6884765625 519.630004882813,401.424163818359 538.640380859375,397.7783203125 564.291442871094,392.960601806641 582.064880371094,388.468444824219 591.960693359375,384.3017578125L591.960693359375,378.8330078125C591.960693359375,368.2861328125 589.356567382813,360.7666015625 584.148193359375,356.2744140625 578.939880371094,351.7822265625 569.109130859375,349.5361328125 554.656005859375,349.5361328125 544.890380859375,349.5361328125 537.273193359375,351.456726074219 531.804443359375,355.2978515625 526.335693359375,359.138977050781 521.908630371094,365.877258300781 518.523193359375,375.5126953125L468.718536376953,366.5283203125C474.317504882813,346.476257324219 483.952911376953,331.632507324219 497.624786376953,321.9970703125 511.296661376953,312.361633300781 531.609130859375,307.5439453125 558.562255859375,307.5439453125z " />
+                                </GeometryGroup>
+                            </GeometryGroup>
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                </DrawingGroup>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+
+        <!-- Va -->
+        <DrawingImage x:Key="VaImage">
+            <DrawingImage.Drawing>
+                <DrawingGroup>
+                    <GeometryDrawing>
+                        <GeometryDrawing.Pen>
+                            <Pen Thickness="50" DashCap="Flat" StartLineCap="Flat" EndLineCap="Flat" LineJoin="Miter" MiterLimit="10" Brush="#FF000000" />
+                        </GeometryDrawing.Pen>
+                        <GeometryDrawing.Geometry>
+                            <EllipseGeometry Center="400,400" RadiusX="362" RadiusY="363" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing Brush="#FF000000">
+                        <GeometryDrawing.Geometry>
+                            <!--<TextGeometry TopLeft="182,151" BottomRight="182,151" Text="Va" FontFamily="Arial" FontStyle="Normal" FontWeight="Bold" TextSize="400" Alignment="Left" Trimming="CharacterEllipsis" />-->
+                            <GeometryGroup>
+                                <GeometryGroup>
+                                    <PathGeometry Figures="M181.8046875,233.3251953125L244.5,233.3251953125 316.9609375,445.2392578125 387.078125,233.3251953125 448.40625,233.3251953125 345.8671875,519.6533203125 284.1484375,519.6533203125 181.8046875,233.3251953125z " />
+                                    <PathGeometry Figures="M569.890747070313,420.0439453125C562.859497070313,422.3876953125 551.726684570313,425.187164306641 536.492309570313,428.4423828125 521.257934570313,431.697601318359 511.296966552734,434.8876953125 506.609466552734,438.0126953125 499.447998046875,443.0908203125 495.867279052734,449.5361328125 495.867279052734,457.3486328125 495.867279052734,465.030914306641 498.731872558594,471.671539306641 504.461029052734,477.2705078125 510.190185546875,482.869476318359 517.481872558594,485.6689453125 526.336059570313,485.6689453125 536.231872558594,485.6689453125 545.671997070313,482.413726806641 554.656372070313,475.9033203125 561.296997070313,470.955413818359 565.658935546875,464.900726318359 567.742309570313,457.7392578125 569.174560546875,453.0517578125 569.890747070313,444.132476806641 569.890747070313,430.9814453125L569.890747070313,420.0439453125z M536.492309570313,307.5439453125C560.971435546875,307.5439453125 579.200622558594,310.441101074219 591.179809570313,316.2353515625 603.158935546875,322.029602050781 611.589965820313,329.386413574219 616.472778320313,338.3056640625 621.355590820313,347.224914550781 623.796997070313,363.5986328125 623.796997070313,387.4267578125L623.211059570313,451.4892578125C623.211059570313,469.718414306641 624.089965820313,483.162445068359 625.847778320313,491.8212890625 627.605590820313,500.480133056641 630.893310546875,509.757476806641 635.711059570313,519.6533203125L581.414184570313,519.6533203125C579.981872558594,516.007507324219 578.224060058594,510.603851318359 576.140747070313,503.4423828125 575.229248046875,500.187164306641 574.578247070313,498.038726806641 574.187622070313,496.9970703125 564.812622070313,506.111663818359 554.786560058594,512.947570800781 544.109497070313,517.5048828125 533.432373046875,522.062194824219 522.039184570313,524.3408203125 509.929779052734,524.3408203125 488.575622558594,524.3408203125 471.746185302734,518.546569824219 459.441497802734,506.9580078125 447.136810302734,495.369476318359 440.984466552734,480.721038818359 440.984466552734,463.0126953125 440.984466552734,451.2939453125 443.783935546875,440.8447265625 449.382904052734,431.6650390625 454.981872558594,422.4853515625 462.826904296875,415.4541015625 472.918060302734,410.5712890625 483.009216308594,405.6884765625 497.559997558594,401.424163818359 516.570434570313,397.7783203125 542.221435546875,392.960601806641 559.994873046875,388.468444824219 569.890747070313,384.3017578125L569.890747070313,378.8330078125C569.890747070313,368.2861328125 567.286560058594,360.7666015625 562.078247070313,356.2744140625 556.869873046875,351.7822265625 547.039184570313,349.5361328125 532.586059570313,349.5361328125 522.820434570313,349.5361328125 515.203247070313,351.456726074219 509.734466552734,355.2978515625 504.265716552734,359.138977050781 499.838623046875,365.877258300781 496.453216552734,375.5126953125L446.648529052734,366.5283203125C452.247497558594,346.476257324219 461.882904052734,331.632507324219 475.554779052734,321.9970703125 489.226654052734,312.361633300781 509.539154052734,307.5439453125 536.492309570313,307.5439453125z " />
+                                </GeometryGroup>
+                            </GeometryGroup>
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                </DrawingGroup>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+
+
+    </Window.Resources>
+
+    <Grid Name="MainGrid" Background="{StaticResource BrushMainGrid}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition />
+            <RowDefinition Height="40"/>
+            
+        </Grid.RowDefinitions>
+
+        <Menu IsMainMenu="True" Grid.Row="0">
+            <MenuItem Name="menuFile" Header="File">
+                <MenuItem Name="menuFile_1" Header="Open File" Click="menuFile_1_Click"/>
+                <MenuItem Name="menuFile_2" Header="Exit" Click="menuFile_2_Click"/>
+            </MenuItem>
+            
+            <MenuItem Name="menuFolders" Header="Folders">
+                <MenuItem Name="menuFolders_1" Header="Open current Appfolder" Click="menuFolders_1_Click"/>
+                <MenuItem Name="menuFolders_2" Header="Open Log folder" Click="menuFolders_2_Click"/>
+                <MenuItem Name="menuFolders_3" Header="Open SendTo folder" Click="menuFolders_3_Click"/>
+            </MenuItem>
+            <MenuItem Name="menuHelp" Header="Help">
+                <MenuItem Name="menuHelp_About" Header="About" Click="menuAbout_Click"></MenuItem>
+                <MenuItem Name="menuHelp_Help" Header="Help" Click="menuHelp_Click"></MenuItem>
+                <MenuItem Name="menuHelp_Links" Header="Links" Click="menuLinks_Click"></MenuItem>
+            </MenuItem>
+        </Menu>
+
+        <DockPanel Grid.Row="1" LastChildFill="True" Margin="4,0,4,0">
+            <StackPanel DockPanel.Dock="Left" Orientation="Horizontal">
+                <Image Source="{StaticResource 1Image}" Height="20"/>
+                <Label VerticalAlignment="Center" FontWeight="Bold" Foreground="{StaticResource BrushTextOnDark}">Select Target File:</Label>
+            </StackPanel>
+            
+
+            <Button Name="btnOpenFile" Content="..." Height="20" Width="30"  Click="btnOpenFile_Click" DockPanel.Dock="Right"/>
+            <TextBox Name="txtBoxTargetFile" VerticalAlignment="Center" FontWeight="Bold" FontSize="14">testDummy.exe</TextBox>
+        </DockPanel>
+
+
+        <DockPanel Grid.Row="2" LastChildFill="True" Margin="4,0,4,0">
+            <StackPanel Orientation="Horizontal">
+                <Label Name="lblModifications" FontSize="16" FontWeight="Bold" VerticalAlignment="Center" Foreground="#FFCBE164">Modifications:</Label>
+                <Button Name="btnAnalyze" Width="60" Height="60" Background="{StaticResource BrushAnalyze}" Click="btnAnalyze_Click" FontWeight="Bold" Margin="0,0,4,0">
+                    <StackPanel Orientation="Vertical" >
+                        <Image Source="{StaticResource 2Image}" Height="20"/>
+                        <Label Name="btnAnalyzeLabel1">Analyze</Label>
+                    </StackPanel>
+                </Button>
+                <Button Name="btnInject" Width="60" Height="60" Background="{StaticResource BrushInject}" Click="btnInject_Click" FontWeight="Bold" Margin="0,0,4,0">
+                    <StackPanel Orientation="Vertical" >
+                        <Image Source="{StaticResource 3Image}" Height="20"/>
+                        <Label Name="btnInjectLabel1">Inject</Label>
+                    </StackPanel>
+                </Button>
+
+                <Label Name="lblAnalyze" FontSize="16" FontWeight="Bold" VerticalAlignment="Center" Foreground="#FFCBE164">Analyze:</Label>
+                <Button Name="btnRun" Width="60" Height="60" Background="{StaticResource BrushRun}" Click="btnRun_Click" FontWeight="Bold" Margin="0,0,4,0">
+                    <StackPanel Orientation="Vertical" >
+                        <Label Name="btnRunLabel1" HorizontalAlignment="Center">Run</Label>
+                        <Label Name="btnRunLabel2" HorizontalAlignment="Center">+ Trace</Label>
+                    </StackPanel>
+                </Button>
+                <ToggleButton Name="btnTrace" Width="60" Height="60" Background="{StaticResource BrushTrace}" Click="btnTrace_Click" FontWeight="Bold" Margin="0,0,4,0">
+                    <StackPanel Orientation="Vertical" >
+                        <Label Name="btnTraceLabel1" HorizontalAlignment="Center">Trace</Label>
+                        <Label Name="btnTraceLabel2" HorizontalAlignment="Center">Start</Label>
+                    </StackPanel>
+                </ToggleButton>
+
+                <ToggleButton Name="btnFUSION" Width="60" Height="60" Background="{StaticResource BrushFUSION}" Click="btnFUSION_Click" FontWeight="Bold" Margin="0,0,4,0">
+                    <StackPanel Orientation="Vertical" ToolTip="Enable/Disable FUSION logging">
+                        <Label Name="btnFUSIONLabel1" HorizontalAlignment="Center">FUSION</Label>
+                        <Label Name="btnFUSIONLabel2" HorizontalAlignment="Center">Start</Label>
+                    </StackPanel>
+                </ToggleButton>
+
+            </StackPanel>
+            
+        </DockPanel>
+
+
+        <DockPanel Name="dockPanMessages" Grid.Row="5" LastChildFill="True" Margin="4,0,4,0">
+            <TextBox Name="txtBoxMessages" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" DockPanel.Dock="Top" />
+        </DockPanel>
+
+        <DockPanel Name="dockPanOther" Grid.Row="3" LastChildFill="False" Margin="4,0,4,0">
+            <StackPanel Orientation="Horizontal" DockPanel.Dock="Left">
+                <Label Name="SelectedItemCountLabel1" Foreground="{StaticResource BrushTextOnDark}" FontSize="16" FontWeight="Bold" VerticalAlignment="Center"  Content="Selected MethodDefinitions: " />
+                <Label Name="SelectedItemCountLabel2" Foreground="{StaticResource BrushTextOnDark}" FontSize="16" FontWeight="Bold" VerticalAlignment="Center"  Content="{Binding SelectedItems.Count, ElementName=lstBoxAnalyze}" />
+            </StackPanel>
+        </DockPanel>
+
+        <DockPanel Name="dockPanAnalyzer" Grid.Row="4" LastChildFill="True" Margin="4,0,4,0">
+            <Expander Name="ExpanderTextView" DockPanel.Dock="Left" Header="TextView" Foreground="{StaticResource BrushTextOnDark}">
+                <TextBox Name="txtBoxAnalyzer" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Text="{Binding TextView}" />
+                </Expander>
+
+            <Expander Name="ExpanderTrace" DockPanel.Dock="Right" Header="Trace" Foreground="{StaticResource BrushTextOnDark}">
+                <DockPanel Name="DockPanelTrace">
+                    <StackPanel Orientation="Horizontal" DockPanel.Dock="top" Height="40">
+                        <Label Name="lblTraceFilter" FontSize="16" FontWeight="Bold" VerticalAlignment="Center" Foreground="#FFCBE164">Filters:</Label>
+
+                        <ToggleButton Name="toggleTracePID" Click="toggleTracePID_Click" Background="{StaticResource BrushPID}" Margin="0,0,4,0">
+                            <TextBlock VerticalAlignment="Center">PID: *</TextBlock>
+                        </ToggleButton>
+
+                        <Label Name="lblTraceActions" FontSize="16" FontWeight="Bold" VerticalAlignment="Center" Foreground="#FFCBE164">Actions:</Label>
+                        <Button Name="btnCopyToClipboard" Background="{StaticResource BrushGray}" Click="btnCopyToClipboard_Click" Margin="0,0,4,0">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="{StaticResource CopyImage}"/>
+                                <TextBlock VerticalAlignment="Center">Copy</TextBlock>
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+
+                    <ListView Name="listview" ItemsSource="{Binding Source=TSpy.Queue}" VirtualizingStackPanel.IsVirtualizing="False">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn DisplayMemberBinding="{Binding Path=Index}" Header="Index" />
+                                <GridViewColumn DisplayMemberBinding="{Binding Path=Pid}" Header="Pid" />
+                                <GridViewColumn DisplayMemberBinding="{Binding Path=ProcessName}" Header="ProcessName" />
+                                <GridViewColumn DisplayMemberBinding="{Binding Path=Text}" Header="Text" />
+                                <GridViewColumn DisplayMemberBinding="{Binding Path=Ticks}" Header="Ticks" />
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </DockPanel>
+            </Expander>
+
+            <Expander Name="ExpanderAnalyze" IsExpanded="True" DockPanel.Dock="Right" Header="Analyze" Foreground="{StaticResource BrushTextOnDark}">
+                <DockPanel Name="DockPanelAnalayze">
+                    <StackPanel Orientation="Horizontal" DockPanel.Dock="top" Height="40">
+                        
+                        <Label Name="lblAnalyzeActions" FontSize="16" FontWeight="Bold" VerticalAlignment="Center" Foreground="#FFCBE164">Actions:</Label>
+                        
+                        <Button Name="btnSelectAllMethodDefinitions" DockPanel.Dock="Top" Click="btnSelectAllMethodDefinitions_Click">
+                            <StackPanel Orientation="Horizontal" Background="{StaticResource BrushMethod}">
+                                <Image Source="{StaticResource MeImage}"/>
+                                <TextBlock VerticalAlignment="Center">Select All</TextBlock>
+                            </StackPanel>
+                        </Button>
+
+
+
+                        <Label Name="lblAnalyzeFilter" FontSize="16" FontWeight="Bold" VerticalAlignment="Center" Foreground="#FFCBE164">Filters:</Label>
+
+                        <ToggleButton Name="toggleModules" Click="toggleModules_Click" Width="80" >
+                        <StackPanel Orientation="Horizontal" Background="{StaticResource BrushModule}" >
+                            <Image Source="{StaticResource MoImage}"/>
+                            <TextBlock VerticalAlignment="Center">Modules</TextBlock>
+                        </StackPanel>
+                    </ToggleButton>
+                        <ToggleButton Name="toggleTypes" Click="toggleTypes_Click" >
+                        <StackPanel Orientation="Horizontal" Background="{StaticResource BrushType}">
+                            <Image Source="{StaticResource TyImage}"/>
+                            <TextBlock VerticalAlignment="Center">Types</TextBlock>
+                        </StackPanel>
+                    </ToggleButton>
+                        <ToggleButton Name="toggleMethods" Click="toggleMethods_Click" >
+                        <StackPanel Orientation="Horizontal" Background="{StaticResource BrushMethod}">
+                            <Image Source="{StaticResource MeImage}"/>
+                            <TextBlock VerticalAlignment="Center">Methods</TextBlock>
+                        </StackPanel>
+                    </ToggleButton>
+                        <ToggleButton Name="toggleParameters" Click="toggleParameters_Click" >
+                        <StackPanel Orientation="Horizontal" Background="{StaticResource BrushParameter}">
+                            <Image Source="{StaticResource PaImage}"/>
+                            <TextBlock VerticalAlignment="Center">Parameters</TextBlock>
+                        </StackPanel>
+                    </ToggleButton>
+                        <ToggleButton Name="toggleVariables" Click="toggleVariables_Click">
+                        <StackPanel Orientation="Horizontal" Background="{StaticResource BrushVariable}">
+                            <Image Source="{StaticResource VaImage}"/>
+                            <TextBlock VerticalAlignment="Center">Variables</TextBlock>
+                        </StackPanel>
+                    </ToggleButton>
+                </StackPanel>
+
+                    <!--<ListBox Name="lstBoxAnalyze" ItemsSource="{Binding Source=_analyzer.view}" SelectionMode="Multiple">-->
+                    <ListBox Name="lstBoxAnalyze" ItemsSource="{Binding View}" SelectionMode="Multiple">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <ContentControl Margin="3" Width="20" Height="20" Content="{Binding Image}"/>
+                                <TextBlock Text="{Binding Name}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="{x:Type ListBoxItem}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Path=Editible}" Value="False">
+                                    <Setter Property="Focusable" Value="False" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Path=Type}" Value="0">
+                                    <Setter Property="Background" Value="{DynamicResource BrushAssembly}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Path=Type}" Value="1">
+                                    <Setter Property="Background" Value="{DynamicResource BrushModule}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Path=Type}" Value="2">
+                                    <Setter Property="Background" Value="{DynamicResource BrushType}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Path=Type}" Value="3">
+                                    <Setter Property="Background" Value="{DynamicResource BrushMethod}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Path=Type}" Value="4">
+                                    <Setter Property="Background" Value="{DynamicResource BrushParameter}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Path=Type}" Value="5">
+                                    <Setter Property="Background" Value="{DynamicResource BrushVariable}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Path=Type}" Value="6">
+                                    <Setter Property="Background" Value="{DynamicResource BrushRed}" />
+                                </DataTrigger>
+                            </Style.Triggers>
+
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                </ListBox>
+                </DockPanel>
+            </Expander>
+
+        </DockPanel>
+
+    </Grid>
+</Window>

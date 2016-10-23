@@ -1,0 +1,35 @@
+﻿<Window x:Class="pTracer_dn.Windows.About"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:pTracer_dn.Windows"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterOwner"
+        Icon="../PT.png"
+        Title="About" Height="320" Width="320" Background="#FF333333" Closed="Window_Closed" KeyDown="Window_KeyDown" MinWidth="150">
+
+    <Grid Background="#FF333333" HorizontalAlignment="Center" VerticalAlignment="Top">
+        <StackPanel Margin="20,20,20,20" Width="250">
+            <TextBlock FontFamily="Square721 BT" FontSize="22" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#FFAAA4A4">phono's Tracer</TextBlock>
+            <TextBlock FontFamily="Square721 BT" FontSize="22" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#FFAAA4A4"></TextBlock>
+            <Border BorderBrush="Black" BorderThickness="4" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                <ScrollViewer>
+                    <TextBlock  Background="White" MouseDown="TextBlock_MouseDown" ScrollViewer.HorizontalScrollBarVisibility="Visible" Padding="8" Margin="0,0,0,-4" FontSize="12">
+                        thanks to:<LineBreak />
+                        <LineBreak />
+                        kao (BS) for great personal support<LineBreak />
+			Kurapica (BS)<LineBreak />
+                        0xd4d (dnSpy, dnlib)<LineBreak />
+                        Simon Mourier (TraceSpy)<LineBreak />
+                        Punit Ganshani (CInject)<LineBreak />
+                        Joe Albahari (PredicateBuilder)<LineBreak />
+                        <LineBreak />
+                        and all @ exetools, BS, stackoverflow<LineBreak />
+                        <LineBreak />
+                    </TextBlock>
+                </ScrollViewer>
+            </Border>
+        </StackPanel>
+    </Grid>
+</Window>

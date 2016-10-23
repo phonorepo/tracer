@@ -1,0 +1,38 @@
+﻿<Window x:Class="pTracer_dn.Windows.Links"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:pTracer_dn.Windows"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterOwner"
+        Icon="../PT.png"
+        Title="Links" Height="400" Width="600" Background="#FF333333" Closed="Window_Closed">
+
+    <Window.Resources>
+        <SolidColorBrush x:Key="BrushGrid" Color="#444"/>
+        <SolidColorBrush x:Key="BrushTitle" Color="#FFAAA4A4"/>
+        <SolidColorBrush x:Key="BrushTitle2" Color="#FF99B4D1"/>
+        
+        <SolidColorBrush x:Key="BrushTextOnDark" Color="#FFCBE164"/>
+    </Window.Resources>
+
+    <Grid Background="#FF333333" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <StackPanel Margin="4">
+            <TextBlock FontFamily="Square721 BT" FontSize="22" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#FFAAA4A4">phono's Tracer</TextBlock>
+            <TextBlock FontFamily="Square721 BT" FontSize="22" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#FFAAA4A4"></TextBlock>
+            <TextBlock FontFamily="Square721 BT" FontSize="12" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{StaticResource BrushTextOnDark}" TextDecorations="Underline">Links</TextBlock>
+            <TextBlock FontFamily="Square721 BT" FontSize="12" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#FFAAA4A4"></TextBlock>
+            <TextBlock FontFamily="Square721 BT" FontSize="12" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{StaticResource BrushTitle2}">
+               Fuslogvw.exe (Assembly Binding Log Viewer) <Hyperlink NavigateUri="https://msdn.microsoft.com/en-us/library/e74a18c4.aspx" RequestNavigate="FollowLink">Link</Hyperlink></TextBlock>
+            <TextBlock FontFamily="Square721 BT" FontSize="12" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#FFAAA4A4" TextWrapping="WrapWithOverflow">The Assembly Binding Log Viewer displays details for assembly binds. This information helps you diagnose why the .NET Framework cannot locate an assembly at run time. These failures are usually the result of an assembly deployed to the wrong location, a native image that is no longer valid, or a mismatch in version numbers or cultures. The common language runtime's failure to locate an assembly typically shows up as a TypeLoadException in your application.</TextBlock>
+            <TextBlock FontFamily="Square721 BT" FontSize="12" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#FFAAA4A4"></TextBlock>
+            <TextBlock FontFamily="Square721 BT" FontSize="12" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{StaticResource BrushTitle2}">TraceSpy <Hyperlink NavigateUri="https://tracespy.codeplex.com" RequestNavigate="FollowLink">Link</Hyperlink></TextBlock>
+            <TextBlock FontFamily="Square721 BT" FontSize="12" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#FFAAA4A4" TextWrapping="WrapWithOverflow">TraceSpy is a pure .NET alternative to the very popular SysInternals DebugView tool.</TextBlock>
+            <TextBlock FontFamily="Square721 BT" FontSize="12" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#FFAAA4A4"></TextBlock>
+            <TextBlock FontFamily="Square721 BT" FontSize="12" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{StaticResource BrushTitle2}">CInject <Hyperlink NavigateUri="https://codeinject.codeplex.com" RequestNavigate="FollowLink">Link</Hyperlink></TextBlock>
+            <TextBlock FontFamily="Square721 BT" FontSize="12" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#FFAAA4A4" TextWrapping="WrapWithOverflow">CInject (or CodeInject) allows code injection into any managed assembly without disassembling and recompiling it. It eases the inevitable task of injecting any code in single or multiple methods in one or many assemblies to intercept code for almost any purpose. (+ Plugin support)</TextBlock>
+
+        </StackPanel>
+    </Grid>
+</Window>
