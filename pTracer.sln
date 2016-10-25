@@ -10,6 +10,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "pTracer_dn", "pTracer_dnLib
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dnlib", "dnlib\src\dnlib.csproj", "{FDFC1237-143F-4919-8318-4926901F4639}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "testdummy", "testdummy\testdummy.csproj", "{644DD2D7-25D9-4B33-9324-E34BCC2698E8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,6 +34,10 @@ Global
 		{FDFC1237-143F-4919-8318-4926901F4639}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FDFC1237-143F-4919-8318-4926901F4639}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FDFC1237-143F-4919-8318-4926901F4639}.Release|Any CPU.Build.0 = Release|Any CPU
+		{644DD2D7-25D9-4B33-9324-E34BCC2698E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{644DD2D7-25D9-4B33-9324-E34BCC2698E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{644DD2D7-25D9-4B33-9324-E34BCC2698E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{644DD2D7-25D9-4B33-9324-E34BCC2698E8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
