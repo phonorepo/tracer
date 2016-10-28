@@ -240,33 +240,32 @@ namespace pTracer_dn
                                         ///
 
                                         /*
-                                        0	0000	nop
-                                        1	0001	newobj	instance void Logging.PrintObj::.ctor()
-                                        2	0006	stloc.0
-                                        3	0007	ldloc.0
-                                        4	0008	call	class [mscorlib]System.Reflection.MethodBase [mscorlib]System.Reflection.MethodBase::GetCurrentMethod()
-                                        5	000D	callvirt	instance void Logging.PrintObj::set_CurrentMethod(class [mscorlib]System.Reflection.MethodBase)
-                                        6	0012	nop
-                                        7	0013	ldloc.0
-                                        8	0014	call	class [mscorlib]System.Reflection.Assembly [mscorlib]System.Reflection.Assembly::GetExecutingAssembly()
-                                        9	0019	callvirt	instance void Logging.PrintObj::set_CurrentAssembly(class [mscorlib]System.Reflection.Assembly)
-                                        10	001E	nop
-                                        11	001F	ldloc.0
-                                        12	0020	ldc.i4.2
-                                        13	0021	newarr	[mscorlib]System.Object
-                                        14	0026	dup
-                                        15	0027	ldc.i4.0
-                                        16	0028	ldstr	"Arg1"
-                                        17	002D	stelem.ref
-                                        18	002E	dup
-                                        19	002F	ldc.i4.1
-                                        20	0030	ldstr	"Arg2"
-                                        21	0035	stelem.ref
-                                        22	0036	callvirt	instance void Logging.PrintObj::set_CurrentArguments(object[])
-                                        23	003B	nop
-                                        24	003C	ldloc.0
-                                        25	003D	callvirt	instance void Logging.PrintObj::PrintArgs()
-                                        26	0042	nop
+					0	0000	nop
+					1	0001	newobj	instance void [Logging]Logging.PrintObj::.ctor()
+					2	0006	stloc	V_0 (0)
+					3	000A	ldloc	V_0 (0)
+					4	000E	call	class [mscorlib]System.Reflection.MethodBase [mscorlib]System.Reflection.MethodBase::GetCurrentMethod()
+					5	0013	callvirt	instance void [Logging]Logging.PrintObj::set_CurrentMethod(class [mscorlib]System.Reflection.MethodBase)
+					6	0018	nop
+					7	0019	ldloc.s	V_0 (0)
+					8	001B	ldc.i4	2
+					9	0020	newarr	[mscorlib]System.Object
+					10	0025	stloc.s	V_1 (1)
+					11	0027	ldloc.s	V_1 (1)
+					12	0029	ldc.i4	0
+					13	002E	ldarg	sender (1)
+					14	0032	box	[mscorlib]System.Object
+					15	0037	stelem.ref
+					16	0038	ldloc.s	V_1 (1)
+					17	003A	ldc.i4	1
+					18	003F	ldarg	e (2)
+					19	0043	stelem.ref
+					20	0044	ldloc.s	V_1 (1)
+					21	0046	callvirt	instance void [Logging]Logging.PrintObj::set_CurrentArguments(object[])
+					22	004B	ldloc.s	V_0 (0)
+					23	004D	callvirt	instance void [Logging]Logging.PrintObj::PrintArgs()
+					24	0052	nop
+
                                         */
 
                                         // Add new variables
