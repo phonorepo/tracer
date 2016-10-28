@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525" Closed="Window_Closed">
     <Grid>
-        Menu Height="80">
+        <Menu Height="80">
             <MenuItem Header="About" Click="MenuItem_Click"/>
         </Menu>
     </Grid>
