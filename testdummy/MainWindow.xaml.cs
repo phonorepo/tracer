@@ -26,5 +26,12 @@ namespace testdummy
         {
             System.Diagnostics.Debug.WriteLine("Window_Closed");
         }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            if (AboutWindow == null) AboutWindow = new Windows.About();
+            AboutWindow.Owner = Application.Current.MainWindow;
+            AboutWindow.Show();
+        }
     }
 }
