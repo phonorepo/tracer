@@ -516,13 +516,20 @@
                     </ToggleButton>
                 </StackPanel>
 
+
+		<DockPanel>
+                        <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
+                            <Label Name="FilterNameLabel1" Foreground="{StaticResource BrushTextOnDark}" FontSize="16" FontWeight="Bold" VerticalAlignment="Center"  Content="Filter MethodDefinitions by Name: " />
+                            <TextBox Height="20" Name="txtBoxFilterName" HorizontalAlignment="Left" VerticalAlignment="Center" Width="200" TextChanged="txtBoxFilterName_TextChanged"></TextBox>
+                        </StackPanel>
+
                     <!--<ListBox Name="lstBoxAnalyze" ItemsSource="{Binding Source=_analyzer.view}" SelectionMode="Multiple">-->
                     <ListBox Name="lstBoxAnalyze" ItemsSource="{Binding View}" SelectionMode="Multiple">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
                                 <ContentControl Margin="3" Width="20" Height="20" Content="{Binding Image}"/>
-                                <TextBlock Text="{Binding Name}"/>
+                                <TextBlock Text="{Binding VirtualName}"/>
                             </StackPanel>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
@@ -559,6 +566,7 @@
                         </Style>
                     </ListBox.ItemContainerStyle>
                 </ListBox>
+		</DockPanel>
                 </DockPanel>
             </Expander>
 

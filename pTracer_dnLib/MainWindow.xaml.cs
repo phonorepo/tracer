@@ -66,6 +66,12 @@ namespace pTracer_dn
             set { filterPID = value; }
         }
 
+        private string filterName = String.Empty;
+        public string FilterName
+        {
+            get { return filterName; }
+            set { filterName = value; }
+        }
 
         private List<string> modDefs;
         private List<string> typDefs;
@@ -943,6 +949,13 @@ namespace pTracer_dn
         {
             Logging.PrintObj p = new Logging.PrintObj();
 
+        }
+
+        private void txtBoxFilterName_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            filterName = ((TextBox)sender).Text;
+            UpdateFilter();
+            Trace.WriteLine("Filter updated. filter: " + filterName);
         }
 
     }

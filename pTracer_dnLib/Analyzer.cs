@@ -39,6 +39,18 @@ namespace pTracer_dn
                 OnPropertyChanged("Name");
             }
         }
+
+        private string virtualname;
+        public string VirtualName
+        {
+            get { return virtualname; }
+            set
+            {
+                virtualname = value;
+                OnPropertyChanged("VirtualName");
+            }
+        }
+
         private bool editible;
         public bool Editible
         {
@@ -130,6 +142,7 @@ namespace pTracer_dn
         private bool filterMethods = false;
         private bool filterParameters = true;
         private bool filterVariables = true;
+	private bool filterModuleNames = true;
 
         public bool FilterAssemblyName
         {
@@ -168,6 +181,13 @@ namespace pTracer_dn
             get { return filterVariables; }
             set { filterVariables = value; }
         }
+
+        public bool FilterModuleNames
+        {
+            get { return filterModuleNames; }
+            set { filterModuleNames = value; }
+        }
+
         public ObservableCollection<aPart> aParts { get; set; }
 
         private string textView;
@@ -224,10 +244,28 @@ namespace pTracer_dn
                     foreach (var a in _aPartsFiltered)
                     {
                         if (a.Type == aPart.Types.MethodDefinition && !FilterMethods) _aPartsFiltered.Add(a);
-                        else if (a.Type == aPart.Types.ModuleDefinition && !FilterModules) _aPartsFiltered.Add(a);
                         else if (a.Type == aPart.Types.AssemblyReference && !FilterReferences) _aPartsFiltered.Add(a);
                         else if (a.Type == aPart.Types.ParameterDefinition && !FilterParameters) _aPartsFiltered.Add(a);
                         else if (a.Type == aPart.Types.VariableDefinition && !FilterVariables) _aPartsFiltered.Add(a);
+
+                        //else if (a.Type == aPart.Types.ModuleDefinition && !FilterModules) _aPartsFiltered.Add(a);
+                        else if (a.Type == aPart.Types.ModuleDefinition)
+                        {
+                            Trace.WriteLine("a.Type = ModDef - Name: " + a.Name);
+                            if (!FilterModuleNames)
+                            {
+                                if (!FilterMethods && a.Type == aPart.Types.ModuleDefinition)
+                                {
+                                    Trace.WriteLine("!FilterModuleNames  && a.Type == aPart.Types.ModuleDefinition -->  Add(a);");
+                                    _aPartsFiltered.Add(a);
+                                }
+                            }
+                            else if(a.Type == aPart.Types.ModuleDefinition && a.Name.StartsWith(MainWindow.Instance.FilterName))
+                            {
+                                Trace.WriteLine("!FilterModuleNames  && && a.Name.StartsWith(MainWindow.Instance.FilterName) -->  Add(a);");
+                                _aPartsFiltered.Add(a);
+                            }
+                        }
                         else _aPartsFiltered.Add(a);
                     }
                 }
@@ -255,9 +293,24 @@ namespace pTracer_dn
             if (!FilterModules) predicate = predicate.Or(p => p.Type == aPart.Types.ModuleDefinition);
             if (!FilterReferences) predicate = predicate.Or(p => p.Type == aPart.Types.AssemblyReference);
             if (!FilterTypes) predicate = predicate.Or(p => p.Type == aPart.Types.TypeDefinition);
-            if (!FilterMethods) predicate = predicate.Or(p => p.Type == aPart.Types.MethodDefinition);
+            
             if (!FilterParameters) predicate = predicate.Or(p => p.Type == aPart.Types.ParameterDefinition);
             if (!FilterVariables) predicate = predicate.Or(p => p.Type == aPart.Types.VariableDefinition);
+
+            if (!FilterModuleNames)
+            {
+                if (!FilterMethods)
+                {
+                    predicate = predicate.Or(p => p.Type == aPart.Types.MethodDefinition);
+                }
+            }
+            else
+            {
+                if (!FilterMethods)
+                {
+                    predicate = predicate.Or(p => p.Type == aPart.Types.MethodDefinition && p.Name.StartsWith(MainWindow.Instance.FilterName));
+                }
+            }
 
             Application.Current.Dispatcher.Invoke(
             DispatcherPriority.Normal,
@@ -353,7 +406,8 @@ namespace pTracer_dn
                 if (WithTrace) Trace.WriteLine(s);
 
                 aPart a = new aPart();
-                a.Name = s;
+                a.Name = modDef.Name;
+                a.VirtualName = s;
                 a.Token = modDef.MDToken.ToString();
                 a.Type = aPart.Types.ModuleDefinition;
                 a.Editible = false;
@@ -372,7 +426,8 @@ namespace pTracer_dn
                     if (WithTrace) Trace.WriteLine(s);
 
                     a = new aPart();
-                    a.Name = s;
+                    a.Name = assemRef.Name;
+                    a.VirtualName = s;
                     a.Token = assemRef.MDToken.ToString();
                     a.Type = aPart.Types.AssemblyReference;
                     a.Editible = false;
@@ -393,7 +448,8 @@ namespace pTracer_dn
                     if (WithTrace) Trace.WriteLine(s);
 
                     a = new aPart();
-                    a.Name = s;
+                    a.Name = typDef.Name;
+                    a.VirtualName = s;
                     a.Token = typDef.MDToken.ToString();
                     a.Type = aPart.Types.TypeDefinition;
                     a.Editible = false;
@@ -411,7 +467,8 @@ namespace pTracer_dn
                         if (WithTrace) Trace.WriteLine(s);
 
                         a = new aPart();
-                        a.Name = s;
+                        a.Name = metDef.Name;
+                        a.VirtualName = s;
                         a.Token = metDef.MDToken.ToString();
                         a.Type = aPart.Types.MethodDefinition;
                         a.Editible = true;
@@ -433,7 +490,8 @@ namespace pTracer_dn
                                 if (WithTrace) Trace.WriteLine(s);
 
                                 a = new aPart();
-                                a.Name = s;
+                                a.Name = param.Name;
+                                a.VirtualName = s;
                                 if (param.ParamDef != null) a.Token = param.ParamDef.MDToken.ToString();
                                 a.Type = aPart.Types.ParameterDefinition;
                                 a.Editible = false;
@@ -456,7 +514,8 @@ namespace pTracer_dn
                                 if (WithTrace) Trace.WriteLine(s);
 
                                 a = new aPart();
-                                a.Name = s;
+                                a.Name = variable.Name;
+                                a.VirtualName = s;
                                 a.Type = aPart.Types.VariableDefinition;
                                 a.Editible = false;
 
