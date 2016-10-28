@@ -130,7 +130,13 @@ namespace pTracer_dn
                 Importer importer = new Importer(mod);
                 Type PrintObjType = typeof(PrintObj);
                 ITypeDefOrRef _printObjTypeRef = importer.Import(PrintObjType);
-                
+
+                // This creates a new namespace Logging and class PrintObj in the new assembly, we don't want that
+                //TypeDef _printObj = new TypeDefUser("Logging", "PrintObj", mod.CorLibTypes.Object.TypeDefOrRef);
+                //var _printObjCtor = _printObj.FindDefaultConstructor();
+                //mod.Types.Add(_printObj);
+
+
 
                 Type t = typeof(System.Reflection.MethodBase);
                 string methodname = "GetCurrentMethod";
@@ -163,20 +169,12 @@ namespace pTracer_dn
                 foreach (ModuleDef modDef in mod.Assembly.Modules)
                 {
 
-                    modDef.Import(PrintObjType);
-                    //TypeDef _printObj = new TypeDefUser("Logging", "PrintObj", _printObjTypeRef);
-                    //TypeDef _printObj = new TypeDefUser("PrintObj", _printObjTypeRef);
-                    TypeDef _printObj = new TypeDefUser("Logging", "PrintObj", mod.CorLibTypes.Object.TypeDefOrRef);
-                    //var _printObjCtor = _printObj.FindDefaultConstructor();
-                    mod.Types.Add(_printObj);
-
-
                     foreach (TypeDef typDef in modDef.Types)
                     {
                         foreach (MethodDef metDef in typDef.Methods)
                         {
-                            if (MethodToken.Contains(metDef.MDToken.ToString()) && metDef.Name == "About1_Closed")
-                            //if (MethodToken.Contains(metDef.MDToken.ToString()))
+                            //if (MethodToken.Contains(metDef.MDToken.ToString()) && metDef.Name == "About1_Closed")
+                            if (MethodToken.Contains(metDef.MDToken.ToString()))
                             {
                                 if (WithTrace) Trace.WriteLine("Found method " + metDef.ToString() + " Token: " + metDef.MDToken.ToString());
 
@@ -193,6 +191,21 @@ namespace pTracer_dn
                                             variablesInfo += varInfo;
                                         }
                                     }
+
+                                    /*
+                                     * if we want to skip anything 
+                                    if (metDef.IsConstructor ||
+                                        metDef.IsAbstract ||
+                                        metDef.IsSetter ||
+                                        (metDef.IsSpecialName && !metDef.IsGetter) || // to allow getter methods
+                                        metDef.IsInstanceConstructor ||
+                                        metDef.IsManaged == false
+                                        )
+                                    {
+                                        if (WithTrace) Trace.WriteLine("Skipped unsupported metDef " + metDef.Name);
+                                    }
+                                    else if (metDef != null && metDef.Body != null)
+                                    */
 
                                     if (metDef != null && metDef.Body != null)
                                     {
@@ -259,9 +272,10 @@ namespace pTracer_dn
                                         // Add new variables
                                         metDef.Body.InitLocals = true;
 
-                                        Local printO = new Local(_printObj.ToTypeSig());
+                                        Local printO = new Local(_printObjTypeRef.ToTypeSig());
                                         metDef.Body.Variables.Add(printO);
-                                        var objectCtor = new MemberRefUser(mod, ".ctor", MethodSig.CreateInstance(mod.CorLibTypes.Void), _printObjTypeRef);
+                                        
+                                        
 
                                         var objType = mod.CorLibTypes.Object.ToTypeDefOrRef();
                                         var objTypeArr = importer.Import(typeof(object[]));
@@ -270,7 +284,13 @@ namespace pTracer_dn
 
 
                                         newInstructions.Add(new Instruction(OpCodes.Nop));
+
+                                        // using MemberRef cTor will create the logging.PrintObj: new Logging.PrintObj()
+                                        var objectCtor = new MemberRefUser(mod, ".ctor", MethodSig.CreateInstance(mod.CorLibTypes.Void), _printObjTypeRef);
                                         newInstructions.Add(new Instruction(OpCodes.Newobj, objectCtor));
+
+
+
                                         newInstructions.Add(OpCodes.Stloc.ToInstruction(printO));
                                         newInstructions.Add(OpCodes.Ldloc.ToInstruction(printO));
 
@@ -287,7 +307,7 @@ namespace pTracer_dn
                                         {
                                             if (!metDef.Parameters[i].IsHiddenThisParameter) pList.Add(metDef.Parameters[i]);
                                         }
-                                        //newInstructions.Add(new Instruction(OpCodes.Ldc_I4, metDef.Parameters.Count));
+
                                         newInstructions.Add(new Instruction(OpCodes.Ldc_I4, pList.Count));
 
 
@@ -296,16 +316,17 @@ namespace pTracer_dn
 
 
                                         //for (int i = 0; i < metDef.Parameters.Count; i++)
-                                        for (int i = 0; i < pList.Count; i++) 
+                                        for (int i = 0; i < pList.Count; i++)
                                         {
-                                            //if (WithTrace) Trace.WriteLine("Found Parameter " + metDef.Parameters[i].Name.ToString() + " IsHiddenThisParameter: " + metDef.Parameters[i].IsHiddenThisParameter.ToString());
-                                            if (WithTrace) Trace.WriteLine("Found Parameter " + pList[i].Name.ToString()); 
+                                            if (WithTrace) Trace.WriteLine("Found Parameter " + pList[i].Name.ToString());
 
                                             bool processAsNormal = true;
 
                                             //if (metDef.Parameters[i].Type.IsByRef)
-                                            if (pList[i].Type.IsByRef) 
+                                            if (pList[i].Type.IsByRef)
                                             {
+                                                if (WithTrace) Trace.WriteLine("(IsByRef) " + pList[i].Name.ToString());
+
                                                 //* Sample Instruction set:
                                                 //* L_002a: ldloc.2 
                                                 //* L_002b: ldc.i4.0 
@@ -316,39 +337,53 @@ namespace pTracer_dn
 
                                                 newInstructions.Add(new Instruction(OpCodes.Ldloc_S, oArray));
                                                 newInstructions.Add(new Instruction(OpCodes.Ldc_I4, i));
-                                                //newInstructions.Add(new Instruction(OpCodes.Ldarg, metDef.Parameters[i]));
+
                                                 newInstructions.Add(new Instruction(OpCodes.Ldarg, pList[i]));
                                                 newInstructions.Add(new Instruction(OpCodes.Ldind_Ref));
                                                 newInstructions.Add(new Instruction(OpCodes.Stelem_Ref));
 
                                                 processAsNormal = false;
                                             }
-                                            //else if (metDef.Parameters[i].IsHiddenThisParameter)
+                                            //else if (pList[i].IsHiddenThisParameter)
                                             //{
                                             //processAsNormal = false;
                                             //}
-                                            /*
-                                            else if (metDef.Parameters[i].Type.IsClassSig)
+
+                                            else if (pList[i].Type.IsClassSig)
                                             {
+                                                if (WithTrace) Trace.WriteLine("(IsClassSig) " + pList[i].Name.ToString() + " Type: " + pList[i].Type + " Type.ReflectionFullName: " + pList[i].Type.ReflectionFullName);
 
                                                 newInstructions.Add(new Instruction(OpCodes.Ldloc_S, oArray));
                                                 newInstructions.Add(new Instruction(OpCodes.Ldc_I4, i));
-                                                newInstructions.Add(new Instruction(OpCodes.Ldarg, metDef.Parameters[i]));
-                                                newInstructions.Add(new Instruction(OpCodes.Ldind_Ref));
+                                                newInstructions.Add(new Instruction(OpCodes.Ldarg, pList[i]));
+                                                //newInstructions.Add(new Instruction(OpCodes.Box, pList[i].Type)); // causing System.InvalidCastException: Type "dnlib.DotNet.ClassSig" cannot be converted to Type "dnlib.DotNet.TypeSpec"
+
+                                                ClassSig cSig = new ClassSig(pList[i].Type.ToTypeDefOrRef());
+                                                Trace.WriteLine("(IsClassSig) cSig: " + cSig.ToString());
+
                                                 newInstructions.Add(new Instruction(OpCodes.Stelem_Ref));
 
                                                 processAsNormal = false;
                                             }
-                                            else if (metDef.Parameters[i].Type.IsCorLibType)
+                                            else if (pList[i].Type.IsCorLibType)
                                             {
+                                                if (WithTrace) Trace.WriteLine("(IsCorLibType) " + pList[i].Name.ToString() + " Type: " + pList[i].Type + " Type.ReflectionFullName: " + pList[i].Type.ReflectionFullName);
+                                                if (WithTrace) Trace.WriteLine("(IsCorLibType...) " + " ElementType: " + pList[i].Type.ElementType + " Type.FullName: " + pList[i].Type.FullName);
+                                                if (WithTrace) Trace.WriteLine("(IsCorLibType...) " + " Module: " + pList[i].Type.Module + " Type.Next: " + pList[i].Type.Next);
+                                                if (WithTrace) Trace.WriteLine("(IsCorLibType...) " + " ReflectionName: " + pList[i].Type.ReflectionName + " Type.ReflectionNamespace: " + pList[i].Type.ReflectionNamespace);
                                                 newInstructions.Add(new Instruction(OpCodes.Ldloc_S, oArray));
                                                 newInstructions.Add(new Instruction(OpCodes.Ldc_I4, i));
-                                                newInstructions.Add(new Instruction(OpCodes.Ldarg, metDef.Parameters[i]));
-                                                newInstructions.Add(new Instruction(OpCodes.Ldind_Ref));
+                                                newInstructions.Add(new Instruction(OpCodes.Ldarg, pList[i]));
+                                                
+                                                //newInstructions.Add(new Instruction(OpCodes.Box, pList[i].Type)); // causing System.InvalidCastException: Type "dnlib.DotNet.CorLibTypeSig" cannot be converted to Type "dnlib.DotNet.TypeSpec"
+                                                //newInstructions.Add(new Instruction(OpCodes.Box, mod.CorLibTypes.Int32)); // working for Int32 as example
+                                                CorLibTypeSig cLibTypeSig = new CorLibTypeSig(pList[i].Type.ToTypeDefOrRef(), pList[i].Type.ElementType);
+                                                newInstructions.Add(OpCodes.Box.ToInstruction(cLibTypeSig));
+                                                
                                                 newInstructions.Add(new Instruction(OpCodes.Stelem_Ref));
 
                                                 processAsNormal = false;
-                                            }*/
+                                            }
 
 
                                             //else if (metDef.Parameters[i].ParameterType.IsArray)
@@ -362,7 +397,7 @@ namespace pTracer_dn
                                             //else if (metDef.Parameters[i].Type.IsFunctionPointer)
                                             else if (pList[i].Type.IsFunctionPointer)
                                             {
-
+                                                if (WithTrace) Trace.WriteLine("(IsFunctionPointer) " + pList[i].Name.ToString());
                                             }
 
                                             //else if (metDef.Parameters[i].ParameterType.IsOptionalModifier)
@@ -372,7 +407,7 @@ namespace pTracer_dn
                                             //else if (metDef.Parameters[i].Type.IsPointer)
                                             else if (pList[i].Type.IsPointer)
                                             {
-
+                                                if (WithTrace) Trace.WriteLine("(IsPointer) " + pList[i].Name.ToString());
                                             }
                                             else
                                             {
@@ -382,6 +417,8 @@ namespace pTracer_dn
                                             //if (processAsNormal && !metDef.Parameters[i].Type.IsClassSig && !metDef.Parameters[i].Type.IsCorLibType)
                                             if (processAsNormal)
                                             {
+                                                if (WithTrace) Trace.WriteLine("processAsNormal: " + pList[i].Name.ToString());
+
                                                 // Sample Instruction set: for simple PARAMETER
                                                 //* L_0036: ldloc.s objArray
                                                 //* L_0038: ldc.i4 0
@@ -401,13 +438,12 @@ namespace pTracer_dn
                                                 newInstructions.Add(new Instruction(OpCodes.Ldloc_S, oArray));
                                                 newInstructions.Add(new Instruction(OpCodes.Ldc_I4, i));
                                                 newInstructions.Add(new Instruction(OpCodes.Ldarg, metDef.Parameters[i]));
-                                                //newInstructions.Add(new Instruction(OpCodes.Box, metDef.Parameters[i].Type));
                                                 newInstructions.Add(new Instruction(OpCodes.Box, pList[i].Type));
                                                 newInstructions.Add(new Instruction(OpCodes.Stelem_Ref));
 
                                             }
                                         }
-
+                                        
                                         // fill Arguments array
                                         newInstructions.Add(new Instruction(OpCodes.Ldloc_S, oArray));
                                         newInstructions.Add(new Instruction(OpCodes.Callvirt, _methodSetArguments));
@@ -417,13 +453,12 @@ namespace pTracer_dn
                                         newInstructions.Add(new Instruction(OpCodes.Callvirt, _methodPrintArgs));
 
 
-
                                         // Finally add instructions to beginning
                                         for (int j = 0; j < newInstructions.Count; j++)
                                         {
                                             instructions.Insert(j, newInstructions[j]);
                                         }
-                                        
+
 
                                     }
                                     else
@@ -434,7 +469,6 @@ namespace pTracer_dn
                                 catch (Exception ex)
                                 {
                                     Debug.WriteLine(ex.ToString());
-                                    //MessageBox.Show(ex.ToString());
                                     MainWindow.Instance.mBox("Injector Exception", ex.ToString());
                                 }
 
