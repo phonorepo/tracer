@@ -17,6 +17,8 @@ namespace testdummy
 {
     public partial class MainWindow : Window
     {
+	Windows.About AboutWindow;
+
         public MainWindow()
         {
             InitializeComponent();
