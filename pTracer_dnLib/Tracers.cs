@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -19,7 +19,7 @@ internal static class NativeMethods
     internal static extern uint WaitForSingleObject(IntPtr handle, uint milliseconds);
 
     [DllImport("kernel32.dll", SetLastError = true)]
-    internal static extern IntPtr MapViewOfFile(IntPtr hFileMappingObject, FileMapAccess dwDesiredAccess, uint dwFileOffsetHigh, uint dwFileOffsetLow, uint dwNumberOfBytesToMap);
+    internal static extern IntPtr MapViewOfFile(IntPtr hFileMappingObject, FileMapAccess dwDesiredAccess, uint dwFileOffsetHigh, uint dwFileOffsetLow, IntPtr dwNumberOfBytesToMap);
 
     [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
     internal static extern IntPtr CreateFileMapping(IntPtr hFile, IntPtr lpFileMappingAttributes, FileMapProtection flProtect, uint dwMaximumSizeHigh, uint dwMaximumSizeLow, string lpName);
@@ -218,6 +218,7 @@ namespace pTracer_dn
                     this._dataReadyEvent = IntPtr.Zero;
                     this._mapping = IntPtr.Zero;
                     this._file = IntPtr.Zero;
+                    this.cancelTS.Dispose();
                 }
                 disposed = true;
             }
@@ -247,7 +248,7 @@ namespace pTracer_dn
                     if (_mapping == IntPtr.Zero)
                         Marshal.ThrowExceptionForHR(Marshal.GetLastWin32Error());
 
-                    _file = NativeMethods.MapViewOfFile(_mapping, NativeMethods.FileMapAccess.FileMapRead, 0, 0, 1024);
+                    _file = NativeMethods.MapViewOfFile(_mapping, NativeMethods.FileMapAccess.FileMapRead, 0, 0, new IntPtr(1024));
                     if (_file == IntPtr.Zero)
                         Marshal.ThrowExceptionForHR(Marshal.GetLastWin32Error());
 
@@ -303,7 +304,7 @@ namespace pTracer_dn
                         if (wait == WAIT_OBJECT_0) // we don't care about other return values
                         {
                             int pid = Marshal.ReadInt32(_file);
-                            string text = Marshal.PtrToStringAnsi(new IntPtr(_file.ToInt32() + Marshal.SizeOf(typeof(int)))).TrimEnd(null);
+                            string text = Marshal.PtrToStringAnsi(new IntPtr(_file.ToInt64() + Marshal.SizeOf(typeof(int)))).TrimEnd(null);
                             if (string.IsNullOrEmpty(text))
                                 continue;
 
